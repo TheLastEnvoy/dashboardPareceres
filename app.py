@@ -37,12 +37,22 @@ if selected_andamento != "Todos":
 # Exibir tabela interativa
 st.write(df)
 
+# Gráfico de pizza para assentamentos
+st.subheader("Gráfico de pizza - Assentamentos")
+assentamento_data = df['Assentamento'].value_counts()
+fig_assentamento = px.pie(
+    names=assentamento_data.index,
+    values=assentamento_data.values,
+    title='Distribuição dos Pareceres por Assentamento'
+)
+st.plotly_chart(fig_assentamento)
+
 # Exibir gráfico de barras para andamento
 st.subheader("Gráfico de barras - andamento")
 chart_data_andamento = df['Andamento'].value_counts()
 st.bar_chart(chart_data_andamento)
 
-# Gráfico de pizza
+# Gráfico de pizza para andamento
 st.subheader("Gráfico de pizza - andamento")
 pie_chart_data = df['Andamento'].value_counts()
 fig = px.pie(names=pie_chart_data.index, values=pie_chart_data.values, title='Distribuição dos Andamentos')
