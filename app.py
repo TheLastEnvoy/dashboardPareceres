@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 # Carregar os dados do Excel
-file_path = "pareceres.xlsx"
+file_path = "pareceres_SO_31out2024.xlsx"
 df = pd.read_excel(file_path)
 
 # Definir título do aplicativo
