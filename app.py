@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 # Carregar os dados do Excel
 file_path = "pareceres_SO_31out2024.xlsx"
@@ -54,12 +55,41 @@ pareceres_concluidos = df[df['Andamento'] == 'Concluído'].shape[0]
 # Definir o total a atingir
 total_a_atingir = 5861
 
-# Calcular o progresso
-progresso = (pareceres_em_elaboracao + pareceres_concluidos) / total_a_atingir
+# Criar gráfico de barras empilhadas para mostrar o progresso
+fig_progress = go.Figure()
 
-# Exibir barra de progresso
-st.subheader("Progresso dos Pareceres")
-st.progress(progresso)
+fig_progress.add_trace(go.Bar(
+    name='Em Elaboração',
+    x=['Pareceres'],
+    y=[pareceres_em_elaboracao],
+    marker_color='orange'
+))
+
+fig_progress.add_trace(go.Bar(
+    name='Concluídos',
+    x=['Pareceres'],
+    y=[pareceres_concluidos],
+    marker_color='green'
+))
+
+fig_progress.add_trace(go.Bar(
+    name='Faltando',
+    x=['Pareceres'],
+    y=[total_a_atingir - (pareceres_em_elaboracao + pareceres_concluidos)],
+    marker_color='lightgrey'
+))
+
+# Atualizar layout do gráfico
+fig_progress.update_layout(
+    barmode='stack',
+    title='Progresso dos Pareceres',
+    xaxis_title='Status',
+    yaxis_title='Quantidade',
+    legend_title='Legenda'
+)
+
+# Exibir gráfico de progresso
+st.plotly_chart(fig_progress)
 
 # Calcular o total de pareceres para cada formato
 total_por_formato = df['Formato'].value_counts()
