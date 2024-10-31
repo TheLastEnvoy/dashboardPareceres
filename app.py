@@ -10,54 +10,6 @@ df = pd.read_excel(file_path)
 # Definir título do aplicativo
 st.title("Dashboard de Pareceres")
 
-# Definir título da tabela com informações gerais sobre os pareceres
-st.subheader("Relação de pareceres")
-
-# Filtros laterais
-assentamentos = ['Todos'] + sorted(list(df['Assentamento'].unique()))
-formatos = ['Todos'] + sorted(list(df['Formato'].unique()))
-andamentos = ['Todos'] + sorted(list(df['Andamento'].unique()))
-
-selected_assentamento = st.sidebar.selectbox("Selecione um assentamento:", assentamentos, key="assentamento")
-selected_formato = st.sidebar.selectbox("Selecione um formato:", formatos, key="formato")
-selected_andamento = st.sidebar.selectbox("Selecione um andamento:", andamentos, key="andamento")
-
-# Filtrar por assentamento
-if selected_assentamento != "Todos":
-    df = df[df['Assentamento'] == selected_assentamento]
-
-# Filtrar por formato
-if selected_formato != "Todos":
-    df = df[df['Formato'] == selected_formato]
-
-# Filtrar por andamento
-if selected_andamento != "Todos":
-    df = df[df['Andamento'] == selected_andamento]
-
-# Exibir tabela interativa
-st.write(df)
-
-# Gráfico de pizza para assentamentos
-st.subheader("Gráfico de pizza - Assentamentos")
-assentamento_data = df['Assentamento'].value_counts()
-fig_assentamento = px.pie(
-    names=assentamento_data.index,
-    values=assentamento_data.values,
-    title='Distribuição dos Pareceres por Assentamento'
-)
-st.plotly_chart(fig_assentamento)
-
-# Exibir gráfico de barras para andamento
-st.subheader("Gráfico de barras - andamento")
-chart_data_andamento = df['Andamento'].value_counts()
-st.bar_chart(chart_data_andamento)
-
-# Gráfico de pizza para andamento
-st.subheader("Gráfico de pizza - andamento")
-pie_chart_data = df['Andamento'].value_counts()
-fig = px.pie(names=pie_chart_data.index, values=pie_chart_data.values, title='Distribuição dos Andamentos')
-st.plotly_chart(fig)
-
 # Calcular o total de pareceres em elaboração e concluídos
 pareceres_em_elaboracao = df[df['Andamento'] == 'Em elaboração'].shape[0]
 pareceres_concluidos = df[df['Andamento'] == 'Concluído'].shape[0]
@@ -100,6 +52,25 @@ fig_progress.update_layout(
 
 # Exibir gráfico de progresso
 st.plotly_chart(fig_progress)
+
+# Gráfico de pizza para assentamentos
+st.subheader("Gráfico de pizza - Assentamentos")
+assentamento_data = df['Assentamento'].value_counts()
+fig_assentamento = px.pie(
+    names=assentamento_data.index,
+    values=assentamento_data.values,
+    title='Distribuição dos Pareceres por Assentamento'
+)
+st.plotly_chart(fig_assentamento)
+
+# Exibir tabela interativa
+st.subheader("Relação de pareceres")
+st.write(df)
+
+# Exibir gráfico de barras para andamento
+st.subheader("Gráfico de barras - andamento")
+chart_data_andamento = df['Andamento'].value_counts()
+st.bar_chart(chart_data_andamento)
 
 # Calcular o total de pareceres para cada formato
 total_por_formato = df['Formato'].value_counts()
