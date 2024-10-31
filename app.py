@@ -75,7 +75,7 @@ fig_progress.add_trace(go.Bar(
 fig_progress.add_trace(go.Bar(
     name='Faltando',
     x=['Pareceres'],
-    y=[total_a_atingir - (pareceres_em_elaboracao + pareceres_concluidos)],
+    y=[max(0, total_a_atingir - (pareceres_em_elaboracao + pareceres_concluidos))],
     marker_color='lightgrey'
 ))
 
