@@ -93,17 +93,9 @@ st.subheader("Gráfico de barras - andamento")
 chart_data_andamento = df['Andamento'].value_counts()
 st.bar_chart(chart_data_andamento)
 
-# Calcular o total de pareceres para cada formato
-total_por_formato = df['Formato'].value_counts()
+# Calcular o total de pareceres para cada formato e andamento
+total_por_formato_andamento = df.groupby(['Formato', 'Andamento']).size().reset_index(name='Quantidade de Pareceres')
 
-# Calcular o total de pareceres
-total_de_pareceres = total_por_formato.sum()
-
-# Adicionar o total de pareceres ao DataFrame
-total_por_formato = total_por_formato.reset_index()
-total_por_formato.columns = ['Formato', 'Quantidade de Pareceres']
-total_por_formato.loc[len(total_por_formato)] = ['Total', total_de_pareceres]
-
-# Exibir quadro com os totais
-st.subheader("Quantidade de pareceres por formato")
-st.write(total_por_formato)
+# Exibir quadro com os totais por formato e andamento
+st.subheader("Quantidade de pareceres por formato e andamento")
+st.write(total_por_formato_andamento)
