@@ -49,7 +49,7 @@ fig = px.pie(names=pie_chart_data.index, values=pie_chart_data.values, title='Di
 st.plotly_chart(fig)
 
 # Calcular o total de pareceres em elaboração e concluídos
-pareceres_em_elaboracao = df[df['Andamento'] == 'Em Elaboração'].shape[0]
+pareceres_em_elaboracao = df[df['Andamento'] == 'Em elaboração'].shape[0]
 pareceres_concluidos = df[df['Andamento'] == 'Concluído'].shape[0]
 
 # Definir o total a atingir
@@ -59,7 +59,7 @@ total_a_atingir = 5861
 fig_progress = go.Figure()
 
 fig_progress.add_trace(go.Bar(
-    name='Em Elaboração',
+    name='Em elaboração',
     x=['Pareceres'],
     y=[pareceres_em_elaboracao],
     marker_color='orange'
