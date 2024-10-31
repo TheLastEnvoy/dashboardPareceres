@@ -36,10 +36,10 @@ if selected_andamento != "Todos":
 # Exibir tabela interativa
 st.write(df)
 
-# Exibir gráfico interativo
-st.subheader("Gráfico de barras - formato")
-chart_data = df['Formato'].value_counts()
-st.bar_chart(chart_data)
+# Exibir gráfico de barras para andamento
+st.subheader("Gráfico de barras - andamento")
+chart_data_andamento = df['Andamento'].value_counts()
+st.bar_chart(chart_data_andamento)
 
 # Gráfico de pizza
 st.subheader("Gráfico de pizza - andamento")
