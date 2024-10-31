@@ -10,6 +10,27 @@ df = pd.read_excel(file_path)
 # Definir título do aplicativo
 st.title("Dashboard de Pareceres")
 
+# Filtros laterais
+assentamentos = ['Todos'] + sorted(list(df['Assentamento'].unique()))
+formatos = ['Todos'] + sorted(list(df['Formato'].unique()))
+andamentos = ['Todos'] + sorted(list(df['Andamento'].unique()))
+
+selected_assentamento = st.sidebar.selectbox("Selecione um assentamento:", assentamentos, key="assentamento")
+selected_formato = st.sidebar.selectbox("Selecione um formato:", formatos, key="formato")
+selected_andamento = st.sidebar.selectbox("Selecione um andamento:", andamentos, key="andamento")
+
+# Filtrar por assentamento
+if selected_assentamento != "Todos":
+    df = df[df['Assentamento'] == selected_assentamento]
+
+# Filtrar por formato
+if selected_formato != "Todos":
+    df = df[df['Formato'] == selected_formato]
+
+# Filtrar por andamento
+if selected_andamento != "Todos":
+    df = df[df['Andamento'] == selected_andamento]
+
 # Calcular o total de pareceres em elaboração e concluídos
 pareceres_em_elaboracao = df[df['Andamento'] == 'Em elaboração'].shape[0]
 pareceres_concluidos = df[df['Andamento'] == 'Concluído'].shape[0]
